@@ -1,0 +1,44 @@
+# Extended SDD Stack — Bundle-Manifest
+# Referenziert Komponenten per id+version; sie loesen ueber die aktiven
+# Kataloge auf (deine catalog.json fuer Extensions, ein Workflow-Katalog
+# bzw. vendored Workflow fuer extended-sdd). Siehe Hinweise im Chat.
+
+schema_version: '1.0'
+bundle:
+  id: extended-sdd-stack
+  name: Extended SDD Stack
+  version: 1.0.0
+  role: developer
+  description: 'Benjamins Standard-SDD-Setup: getestete Extensions + erweiterter Workflow,
+    per Befehl in ein neues Repo installierbar.'
+  author: Benjamin Kuebler
+  license: MIT
+requires:
+  speckit_version: '>=0.9.0'
+  tools: []
+  mcp: []
+provides:
+  extensions:
+  - id: discovery
+    version: 0.2.0
+  - id: red-team
+    version: 1.0.2
+  - id: security-review
+    version: 1.6.1
+  - id: qa
+    version: 1.0.0
+  - id: agent-assign
+    version: 1.1.0
+  - id: bugfix
+    version: 1.1.0
+  - id: context-budget
+    version: 0.1.0
+  workflows:
+  - id: extended-sdd
+    version: 1.0.0
+tags:
+- development
+- sdd
+- security
+- code-review
+- governance

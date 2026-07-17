@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-07-17T00:00:00Z",
+  "catalog_url": "https://raw.githubusercontent.com/bkuebler/spec-kit-catalog/main/bundle-catalog.json",
+  "bundles": {
+    "extended-sdd-stack": {
+      "id": "extended-sdd-stack",
+      "name": "Extended SDD Stack",
+      "version": "1.0.0",
+      "role": "developer",
+      "description": "Benjamin Kuebler's standard SDD setup: tested extensions + extended workflow.",
+      "author": "Benjamin Kuebler",
+      "license": "MIT",
+      "download_url": "https://raw.githubusercontent.com/bkuebler/spec-kit-catalog/main/bundles/extended-sdd-stack.yml",
+      "requires": {
+        "speckit_version": ">=0.9.0"
+      },
+      "provides": {
+        "extensions": 7,
+        "workflows": 1
+      },
+      "repository": "https://github.com/bkuebler/spec-kit-catalog",
+      "tags": [
+        "development",
+        "sdd",
+        "security",
+        "code-review",
+        "governance"
+      ],
+      "verified": false
+    }
+  }
+}
