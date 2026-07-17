@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-07-17T00:00:00Z",
+  "catalog_url": "https://raw.githubusercontent.com/bkuebler/spec-kit-catalog/main/workflow-catalog.json",
+  "workflows": {
+    "extended-sdd": {
+      "id": "extended-sdd",
+      "name": "Extended SDD Cycle",
+      "description": "discovery -> specify -> clarify -> red-team -> plan -> tasks -> analyze -> implement -> qa + security, with review gates",
+      "author": "Benjamin Kuebler",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/bkuebler/spec-kit-catalog/main/workflows/extended-sdd.yml",
+      "tags": [
+        "sdd",
+        "extended",
+        "security",
+        "code-review",
+        "governance"
+      ]
+    }
+  }
+}

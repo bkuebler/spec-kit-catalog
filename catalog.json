@@ -1,0 +1,201 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-07-17T00:00:00Z",
+  "catalog_url": "https://raw.githubusercontent.com/bkuebler/spec-kit-catalog/main/catalog.json",
+  "extensions": {
+    "discovery": {
+      "name": "Discovery (pre-spec workflow)",
+      "id": "discovery",
+      "description": "Pre-spec discovery: problem brief, architecture concept, ADR, and feature decomposition.",
+      "author": "Benjamin Kuebler",
+      "version": "0.2.0",
+      "download_url": "https://github.com/bkuebler/spec-kit-discovery/archive/refs/tags/v0.2.0.zip",
+      "repository": "https://github.com/bkuebler/spec-kit-discovery",
+      "homepage": "https://github.com/bkuebler/spec-kit-discovery",
+      "license": "MIT",
+      "category": "process",
+      "effect": "read-write",
+      "requires": {
+        "speckit_version": ">=0.1.0"
+      },
+      "provides": {
+        "commands": 5,
+        "hooks": 0
+      },
+      "tags": [
+        "discovery",
+        "architecture",
+        "adr",
+        "pre-spec",
+        "workflow"
+      ],
+      "verified": false
+    },
+    "red-team": {
+      "name": "Red Team",
+      "id": "red-team",
+      "description": "Adversarial review of functional specs before /speckit.plan. Parallel adversarial lens agents catch hostile actors, silent failures, and regulatory blind spots that clarify/analyze cannot.",
+      "author": "Ash Brener",
+      "version": "1.0.2",
+      "download_url": "https://github.com/ashbrener/spec-kit-red-team/archive/refs/tags/v1.0.2.zip",
+      "repository": "https://github.com/ashbrener/spec-kit-red-team",
+      "homepage": "https://github.com/ashbrener/spec-kit-red-team",
+      "license": "MIT",
+      "category": "docs",
+      "effect": "read-write",
+      "requires": {
+        "speckit_version": ">=0.1.0"
+      },
+      "provides": {
+        "commands": 2,
+        "hooks": 1
+      },
+      "tags": [
+        "adversarial-review",
+        "quality-gate",
+        "spec-hardening",
+        "pre-plan",
+        "audit"
+      ],
+      "verified": false
+    },
+    "security-review": {
+      "name": "Security Review",
+      "id": "security-review",
+      "description": "Full-project secure-by-design security audits plus staged, branch/PR, plan, task, follow-up, and apply reviews",
+      "author": "Spec-Kit Security Team",
+      "version": "1.6.1",
+      "download_url": "https://github.com/DyanGalih/spec-kit-security-review/archive/refs/tags/v1.6.1.zip",
+      "repository": "https://github.com/DyanGalih/spec-kit-security-review",
+      "homepage": "https://github.com/DyanGalih/spec-kit-security-review",
+      "license": "MIT",
+      "category": "code",
+      "effect": "read-write",
+      "requires": {
+        "speckit_version": ">=0.1.0"
+      },
+      "provides": {
+        "commands": 9,
+        "hooks": 3
+      },
+      "tags": [
+        "security",
+        "devsecops",
+        "audit",
+        "owasp",
+        "compliance",
+        "governance",
+        "spec-kit"
+      ],
+      "verified": false
+    },
+    "qa": {
+      "name": "QA Testing",
+      "id": "qa",
+      "description": "Systematic QA testing with browser-driven or CLI-based validation of acceptance criteria from spec",
+      "author": "arunt14",
+      "version": "1.0.0",
+      "download_url": "https://github.com/arunt14/spec-kit-qa/archive/refs/tags/v1.0.0.zip",
+      "repository": "https://github.com/arunt14/spec-kit-qa",
+      "homepage": "https://github.com/arunt14/spec-kit-qa",
+      "license": "MIT",
+      "category": "code",
+      "effect": "read-only",
+      "requires": {
+        "speckit_version": ">=0.1.0"
+      },
+      "provides": {
+        "commands": 1,
+        "hooks": 1
+      },
+      "tags": [
+        "code",
+        "testing",
+        "qa"
+      ],
+      "verified": false
+    },
+    "agent-assign": {
+      "name": "Agent Assign",
+      "id": "agent-assign",
+      "description": "Assign specialized Claude Code agents to spec-kit tasks for targeted execution",
+      "author": "xuyang",
+      "version": "1.1.0",
+      "download_url": "https://github.com/xymelon/spec-kit-agent-assign/archive/refs/tags/v1.1.0.zip",
+      "repository": "https://github.com/xymelon/spec-kit-agent-assign",
+      "homepage": "https://github.com/xymelon/spec-kit-agent-assign",
+      "license": "MIT",
+      "category": "process",
+      "effect": "read-write",
+      "requires": {
+        "speckit_version": ">=0.7.1"
+      },
+      "provides": {
+        "commands": 3,
+        "hooks": 1
+      },
+      "tags": [
+        "agent",
+        "automation",
+        "implementation"
+      ],
+      "verified": false
+    },
+    "bugfix": {
+      "name": "Bugfix Workflow",
+      "id": "bugfix",
+      "description": "Structured bugfix workflow \u2014 capture bugs, trace to spec artifacts, and patch specs surgically",
+      "author": "Quratulain-bilal",
+      "version": "1.1.0",
+      "download_url": "https://github.com/Quratulain-bilal/spec-kit-bugfix/archive/refs/tags/v1.1.0.zip",
+      "repository": "https://github.com/Quratulain-bilal/spec-kit-bugfix",
+      "homepage": "https://github.com/Quratulain-bilal/spec-kit-bugfix",
+      "license": "MIT",
+      "category": "process",
+      "effect": "read-write",
+      "requires": {
+        "speckit_version": ">=0.4.0"
+      },
+      "provides": {
+        "commands": 4,
+        "hooks": 1
+      },
+      "tags": [
+        "bugfix",
+        "debugging",
+        "workflow",
+        "traceability",
+        "maintenance"
+      ],
+      "verified": false
+    },
+    "context-budget": {
+      "name": "Context Budget",
+      "id": "context-budget",
+      "description": "Budget-aware project-memory loader plus token tracking and session learning. Merges the useful parts of memory-loader (context injection) and optimize (token budget, learning) into one governance-context extension.",
+      "author": "Benjamin Kuebler",
+      "version": "0.1.0",
+      "download_url": "https://github.com/bkuebler/spec-kit-context-budget/archive/refs/tags/v0.1.0.zip",
+      "repository": "https://github.com/bkuebler/spec-kit-context-budget",
+      "homepage": "https://github.com/bkuebler/spec-kit-context-budget",
+      "license": "MIT",
+      "category": "optimization",
+      "effect": "read-write",
+      "requires": {
+        "speckit_version": ">=0.6.0"
+      },
+      "provides": {
+        "commands": 3,
+        "hooks": 3
+      },
+      "tags": [
+        "context",
+        "memory",
+        "governance",
+        "token-budget",
+        "optimization"
+      ],
+      "verified": false
+    }
+  }
+}

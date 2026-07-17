@@ -1,0 +1,164 @@
+schema_version: "1.0"
+
+# =============================================================================
+# Extended SDD Cycle
+# -----------------------------------------------------------------------------
+# Verkettet die getesteten Community-Extensions EXPLIZIT als Steps.
+# Wichtig: Die hier verwendeten Extension-Commands sind ALLE auch als
+# Auto-Hooks registriert (siehe .specify/extensions.yml). Wenn dieser Workflow
+# die einzige Steuerungsebene sein soll, die entsprechenden Hooks DEAKTIVIEREN,
+# sonst laufen sie doppelt (einmal als Step, einmal via Hook). Ausnahme:
+# memory-loader bleibt als Hook (querschnittlicher Kontext-Injektor).
+#
+# Nur verifizierte Step-Formen verwendet: `command` (+ optional input.args)
+# und `gate`. Optionale Phasen sind markiert -> bei Nichtbedarf Block löschen.
+# =============================================================================
+
+workflow:
+  id: "extended-sdd"
+  name: "Extended SDD Cycle"
+  version: "1.0.0"
+  author: "benjamin"
+  description: "discovery -> specify -> clarify -> red-team -> plan -> tasks -> analyze -> implement -> qa + security, mit Review-Gates"
+
+requires:
+  speckit_version: ">=0.9.0"     # deckt die genutzten Core-Commands ab;
+                                 # Extension-Floors liegen alle darunter
+                                 # (hoechster: agent-assign >=0.7.1)
+  integrations:
+    any: ["copilot", "claude"]
+
+inputs:
+  spec:
+    type: string
+    required: true
+    prompt: "Was soll gebaut werden?"
+
+steps:
+
+  # ------------------------------------------------------------------ #
+  # PHASE 0 — DISCOVERY  (OPTIONAL, pro Epic; ggf. in eigenen Workflow  #
+  #           auslagern, da per-Epic statt per-Feature)                #
+  #           Extension: discovery v0.2.0 (Reife-Vorbehalt!)           #
+  #           Bei Nichtbedarf: kompletten Block bis PHASE 1 loeschen.  #
+  # ------------------------------------------------------------------ #
+  - id: discovery-problem
+    command: speckit.discovery.problem
+    input:
+      args: "{{ inputs.spec }}"
+
+  - id: discovery-concept
+    command: speckit.discovery.concept
+
+  - id: discovery-clarify
+    command: speckit.discovery.clarify
+
+  - id: discovery-decide          # schreibt ADR
+    command: speckit.discovery.decide
+
+  - id: discovery-decompose       # erzeugt Feature-Briefs fuer /specify
+    command: speckit.discovery.decompose
+
+  - id: gate-discovery
+    type: gate
+    message: "Discovery-Artefakte (Concept, ADR, Feature-Briefs) freigeben?"
+    options: [approve, reject]
+    on_reject: abort
+
+  # ------------------------------------------------------------------ #
+  # PHASE 1 — SPEC                                                      #
+  # ------------------------------------------------------------------ #
+  - id: specify
+    command: speckit.specify
+    input:
+      args: "{{ inputs.spec }}"
+
+  - id: clarify
+    command: speckit.clarify
+
+  # ------------------------------------------------------------------ #
+  # PHASE 2 — ADVERSARIAL HARDENING (vor dem Plan)                      #
+  #           Extension: red-team                                      #
+  # ------------------------------------------------------------------ #
+  - id: red-team
+    command: speckit.red-team.run
+
+  - id: gate-spec
+    type: gate
+    message: "Red-Team-Findings adressiert? Spec vor Planung freigeben."
+    options: [approve, reject]
+    on_reject: abort
+
+  # ------------------------------------------------------------------ #
+  # PHASE 3 — PLAN (+ Security-Review des Plans)                        #
+  #           Extension: security-review                               #
+  # ------------------------------------------------------------------ #
+  - id: plan
+    command: speckit.plan
+    input:
+      args: "{{ inputs.spec }}"
+
+  - id: sec-plan
+    command: speckit.security-review.plan
+
+  # ------------------------------------------------------------------ #
+  # PHASE 4 — TASKS (+ Security-Review + Core-Konsistenzanalyse)        #
+  # ------------------------------------------------------------------ #
+  - id: tasks
+    command: speckit.tasks
+    input:
+      args: "{{ inputs.spec }}"
+
+  - id: sec-tasks
+    command: speckit.security-review.tasks
+
+  - id: analyze                   # Core: Cross-Artefakt-Konsistenz
+    command: speckit.analyze
+
+  - id: gate-plan
+    type: gate
+    message: "Plan / Tasks / Security freigeben vor Implementierung."
+    options: [approve, reject]
+    on_reject: abort
+
+  # ------------------------------------------------------------------ #
+  # PHASE 5 — AGENTEN-ZUWEISUNG  (OPTIONAL — nur mit Claude-Code-       #
+  #           Subagents sinnvoll). Extension: agent-assign             #
+  #           Bei Nichtbedarf: diese drei Steps loeschen.              #
+  # ------------------------------------------------------------------ #
+  - id: agent-assign
+    command: speckit.agent-assign.assign
+
+  - id: agent-validate
+    command: speckit.agent-assign.validate
+
+  # ------------------------------------------------------------------ #
+  # PHASE 6 — IMPLEMENTIERUNG                                           #
+  #           (agent-assign.execute ersetzt ggf. implement, wenn du    #
+  #            ueber gespawnte Agenten ausfuehrst — dann implement      #
+  #            durch speckit.agent-assign.execute tauschen)            #
+  # ------------------------------------------------------------------ #
+  - id: implement
+    command: speckit.implement
+
+  # ------------------------------------------------------------------ #
+  # PHASE 7 — POST-IMPLEMENT-VALIDIERUNG                                #
+  #           Extensions: qa (Acceptance-Tests) + security-review      #
+  # ------------------------------------------------------------------ #
+  - id: qa
+    command: speckit.qa.run
+
+  - id: sec-branch
+    command: speckit.security-review.branch
+
+  - id: gate-final
+    type: gate
+    message: "QA gruen und Security-Scan sauber? Feature abnehmen."
+    options: [approve, reject]
+    on_reject: abort
+
+  # ------------------------------------------------------------------ #
+  # PHASE 8 — REPORT  (OPTIONAL)                                        #
+  # ------------------------------------------------------------------ #
+  - id: sec-export                # Executive/Technical Security-Report
+    command: speckit.security-review.export
